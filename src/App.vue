@@ -1,82 +1,135 @@
-<!-- // Script is in some way equivalent to script.js. This is place
-to define variables, methods and imports of other Vue compoennts. -->
+<!-- // JAVASCRIPT -->
 <script setup>
-// Understanding ref article: https://blog.logrocket.com/understanding-vue-refs/#:~:text=Ref%20s%20are%20Vue.,element%20in%20your%20Vue%20instance.
-// When ref attribute is added to element, this element then can be referenced
-// in template. It is sort of templatecement of getElementById (but better)
+
 import { ref } from "vue";
 
-// Define variables and constants
-var count = ref(0);
 
-// Define functions
-function increment() {
-  count.value++;
+// Task 1 Define variables and constants
+let starter = ref("Data MGMT Assignment 02")
+
+// Task 2 Define ref variables for input and display
+const inputText = ref("");
+const displayText = ref("");
+// ref variables for color selection 
+const selector = ref("")
+const color = ref("")
+const dynamicColor = ref("")
+
+// Function to add text to the ref variable and display it
+const addText = () => {
+  displayText.value += inputText.value;
+};
+
+//Task 3 function for coloring 
+const updateColor = () => {
+  const element = document.querySelector(selector.value);
+  if (element) {
+    element.style.backgroundColor = color.value; 
+    dynamicColor.value = color.value;
+  }
 }
+
 </script>
 
-<!-- Template is a HTML-based syntax that allows you to bind the rendered DOM elements
-with data, objects, functions etc. -->
+
+
+<!-- HTML -->
 <template>
-  <div id="top-bar">
-    <div id="title-container">
-      <img class="logo-image" alt="Iaac logo" src="./assets/iaac-white.png" />
-      <h2>Digital Tools for Cloud-based Data Management</h2>
-    </div>
+  <div id="navbar" class="container">
+      <p>{{ starter }}</p>
+      <div id="title">Aly's website</div>
+      <div id="top-bar">
+
+      <img class="logo-image" alt="Iaac logo" src="./assets/iaac-white.png" />       
+  
+      </div>
   </div>
 
-  <div id="content">
-    <!-- First example - button -->
-    <!-- Here we define what function will be called when button is clicked. -->
-    <button @click="increment">Add one more</button>
+  <div id="flex">
 
-    <!-- Now we print the value. The syntax to print variable is {{ variable_name }}. -->
-    <p style="margin-left: 8px">Count is: {{ count }}</p>
-
+  <div  id="sidebar" class="container"> DATA  
+  <br><input v-model="inputText" placeholder="Enter text" />
+      <button @click="addText">Add Text</button>
+      
+    <br>
+    <input v-model="selector" type="text" placeholder="Enter selector"/>
+    <input v-model="color" type="text" placeholder="Enter color">
+  <button @click="updateColor" class="container" >change color</button>
   </div>
+
+  <div id="main" class="container">  <p :style="{color: dynamicColor}">Main content</p> <p>{{ displayText }}</p>    </div>
+  
+  </div>
+
 </template>
 
-<!-- Style is for CSS styling -->
+
+
+<!-- CSS -->
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 
-  color: #2c3e50;
+html{
+    
+  background-color: rgb(59, 59, 59); 
+  color: rgb(255, 255, 255);
 }
 
-#top-bar {
+body{
+
+  margin:0;
+}
+
+div{
+
+  /* put the borders in the inside of container */
+  box-sizing: border-box;
+}
+
+
+
+#navbar{
+
+  height: 50px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.7);
+  border-color: rgb(0, 0, 0);
+
+  
 }
 
-#title-container {
+#flex{
+  
   display: flex;
-  align-items: center;
-  color: white;
-  margin-right: 1.5rem;
+  height: calc(100vh - 50px);
 }
 
-#content {
+#sidebar{
+  
+  width:20%;
+  border-color: rgb(179, 179, 179);
+
+}
+
+#main{
+  width:80%;
+  background-color: #f0f0f0;
+  color: black;
+
+}
+
+#title{
+  width: 80%;
+  float: left;
   display: flex;
-  padding: 20px
+  justify-content: center;
 }
 
-.logo-image {
-  height: 3.25rem;
-  padding: 0.5rem;
-}
+.container{
 
-h2 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.05em;
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  border-style: solid;
+  border-width: 1px;
+
 }
 </style>
 
